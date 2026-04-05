@@ -1,20 +1,20 @@
-# Use Java 21 (matches your Spring Boot project)
+# Use Java 21
 FROM eclipse-temurin:21-jdk
 
 # Set working directory inside the container
 WORKDIR /app
 
-# Copy all project files into the container
+# Copy all project files
 COPY . .
 
-# Give execute permission to the Maven wrapper
+# Give execute permission to Maven wrapper
 RUN chmod +x mvnw
 
-# Build the project (skip tests to speed up build)
+# Build the project and skip tests
 RUN ./mvnw clean package -DskipTests
 
-# Expose the port your app runs on
+# Expose port 8081
 EXPOSE 8081
 
-# Start the Spring Boot app, using the target jar
-CMD ["sh", "-c", "java -Dserver.port=$PORT -jar target/*.jar"]
+# Run the Spring Boot app
+CMD ["sh", "-c", "java -Dserver.port=8081 -jar target/*.jar"]
